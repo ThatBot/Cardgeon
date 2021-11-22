@@ -10,9 +10,11 @@ namespace Cardgeon.Dungeon{
         [SerializeField] private float roomSize = 10f;
 		[SerializeField] private int maxSteps = 10;
         [SerializeField] private GameObject generator = null;
-        [SerializeField] private GameObject dungeonContainer = null;
+        [SerializeField] private GameObject roomContainer = null;
+        [SerializeField] private GameObject doorContainer = null;
         [SerializeField] private GameObject playerPrefab = null;
         [SerializeField] private GameObject testRoomPrefab = null;
+        [SerializeField] private GameObject[] doorPrefabs;
 
         int dir = 0; //0 - Up | 1 - Right | 2 - Down | 3 - Left
         [SerializeField] private List<Vector3> generatedCells = new List<Vector3>();
@@ -23,11 +25,20 @@ namespace Cardgeon.Dungeon{
         {
             startCell = new Vector2((int)Random.Range(0, gridSize.x), (int)Random.Range(0, gridSize.y));
             generator.transform.position = startCell * roomSize;
-        }
 
-        private void Update()
-        {
-            MoveWalker();
+            for (int i = 0; i < gridSize.y; i++)
+            {
+                for (int j = 0; j < gridSize.x; j++)
+                {
+                    Vector2 gridPos = new Vector2(j * roomSize, i * roomSize);
+                    Instantiate(testRoomPrefab, gridPos, Quaternion.identity, roomContainer.transform);
+                }
+            }
+
+            for (int i = 0; i < maxSteps; i++)
+            {
+                MoveWalker();
+            }
         }
 
         private void MoveWalker()
@@ -42,7 +53,7 @@ namespace Cardgeon.Dungeon{
                         if(!CheckGeneratedCell(generator.transform.position + Vector3.up * roomSize)) 
                         {
                             generator.transform.position += Vector3.up * roomSize;
-                            Instantiate(testRoomPrefab, generator.transform.position, Quaternion.identity, dungeonContainer.transform);
+                            Instantiate(doorPrefabs[dir], generator.transform.position, Quaternion.identity, doorContainer.transform);
                             generatedCells.Add(generator.transform.position);
                             elapsedSteps++;
                         }
@@ -52,7 +63,7 @@ namespace Cardgeon.Dungeon{
                         if (!CheckGeneratedCell(generator.transform.position + Vector3.right * roomSize))
                         {
                             generator.transform.position += Vector3.right * roomSize;
-                            Instantiate(testRoomPrefab, generator.transform.position, Quaternion.identity, dungeonContainer.transform);
+                            Instantiate(doorPrefabs[dir], generator.transform.position, Quaternion.identity, doorContainer.transform);
                             generatedCells.Add(generator.transform.position);
                             elapsedSteps++;
                         }
@@ -62,7 +73,7 @@ namespace Cardgeon.Dungeon{
                         if (!CheckGeneratedCell(generator.transform.position - Vector3.up * roomSize))
                         {
                             generator.transform.position -= Vector3.up * roomSize;
-                            Instantiate(testRoomPrefab, generator.transform.position, Quaternion.identity, dungeonContainer.transform);
+                            Instantiate(doorPrefabs[dir], generator.transform.position, Quaternion.identity, doorContainer.transform);
                             generatedCells.Add(generator.transform.position);
                             elapsedSteps++;
                         }
@@ -72,7 +83,7 @@ namespace Cardgeon.Dungeon{
                         if (!CheckGeneratedCell(generator.transform.position - Vector3.right * roomSize))
                         {
                             generator.transform.position -= Vector3.right * roomSize;
-                            Instantiate(testRoomPrefab, generator.transform.position, Quaternion.identity, dungeonContainer.transform);
+                            Instantiate(doorPrefabs[dir], generator.transform.position, Quaternion.identity, doorContainer.transform);
                             generatedCells.Add(generator.transform.position);
                             elapsedSteps++;
                         }

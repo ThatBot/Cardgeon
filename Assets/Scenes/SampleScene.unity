@@ -155,7 +155,7 @@ Transform:
   m_Children:
   - {fileID: 465422368}
   m_Father: {fileID: 114847308}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &10167552
 Rigidbody2D:
@@ -369,6 +369,7 @@ Transform:
   - {fileID: 1675670842}
   - {fileID: 499864169}
   - {fileID: 1842103666}
+  - {fileID: 2141146494}
   - {fileID: 10167551}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -3333,9 +3334,15 @@ MonoBehaviour:
   roomSize: 10
   maxSteps: 20
   generator: {fileID: 499864168}
-  dungeonContainer: {fileID: 1842103665}
+  roomContainer: {fileID: 1842103665}
+  doorContainer: {fileID: 2141146493}
   playerPrefab: {fileID: 0}
   testRoomPrefab: {fileID: 8398899683698328451, guid: f9408bb965e04f145a19a1feef44d584, type: 3}
+  doorPrefabs:
+  - {fileID: 139109670793006557, guid: 93f045116be18b94ab5d3e2cddaae16f, type: 3}
+  - {fileID: 1816362542134493414, guid: c69e6ff9165098e4e8cf0731b4f5eff9, type: 3}
+  - {fileID: 7719399425313466604, guid: 472428d548341814cb256901c47348be, type: 3}
+  - {fileID: 3327257307097567687, guid: 1af3b2f651ef66e4da50cf909ca07146, type: 3}
   generatedCells: []
 --- !u!1 &1702701271
 GameObject:
@@ -3963,3 +3970,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonCam: {fileID: 1856318684}
   player: {fileID: 10167550}
+--- !u!1 &2141146493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2141146494}
+  m_Layer: 0
+  m_Name: Dungeon Door Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2141146494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141146493}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 114847308}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
