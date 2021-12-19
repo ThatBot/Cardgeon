@@ -15,8 +15,13 @@ MonoBehaviour:
   displayName: Test Card 4
   description: Test Card 4
   sprite: {fileID: 21300000, guid: 653f6a6aab307f84fb1053a431aba152, type: 3}
+  cardEventSprite: {fileID: 21300000, guid: 02aceac4e2991334a99a0b6d065b4aaf, type: 3}
+  secondaryCardEventSprite: {fileID: 21300000, guid: f9570ff14e05c814a8e9b98a2fa5f189, type: 3}
   damage: 4
   manaCost: 4
-  cardEvent: 0
+  cardEvent: 2
+  secondaryCardEvent: 4
+  hasEventPrimary: 1
+  hasEventSecondary: 1
   isSpell: 0
   rarity: -1

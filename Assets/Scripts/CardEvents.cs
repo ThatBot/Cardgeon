@@ -1,10 +1,15 @@
 using System;
+using UnityEngine;
 
 public enum CardEvents
 {
 	None,
 	Lightning,
 	StrongLightning,
-	Combustion
+	Combustion,
+	Acid,
+	Poison,
+	Corrosion,
+	Radioactive
 }
 

@@ -2,17 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Card : MonoBehaviour
 {
     [SerializeField] private float hoverDisplacement = 20f;
-	[SerializeField] private CardObject cardObject = null;
-    [SerializeField] private RawImage cardSprite = null;
+	[SerializeField] private CardObject cardObject = null;  
     private bool cardEnabled = true;
+
+    [Header("Visuals")]
+    [SerializeField] private RawImage cardSprite = null;
+    [SerializeField] private RawImage event1Sprite = null;
+    [SerializeField] private RawImage event2Sprite = null;
+    [SerializeField] private TMP_Text nameText = null;
+    [SerializeField] private TMP_Text manaText = null;
+    [SerializeField] private TMP_Text damageText = null;
 
     private void Awake()
     {
         cardSprite.texture = cardObject.sprite.texture;
+        if (cardObject.hasEventPrimary)
+        {
+            event1Sprite.texture = cardObject.cardEventSprite.texture;
+            event1Sprite.gameObject.SetActive(true);
+        }
+
+        if (cardObject.hasEventSecondary)
+        {
+            event2Sprite.texture = cardObject.secondaryCardEventSprite.texture;
+            event2Sprite.gameObject.SetActive(true);
+        }
+
+        nameText.text = cardObject.displayName;
+        manaText.text = cardObject.manaCost.ToString();
+        damageText.text = (cardObject.isSpell) ? "--" : cardObject.damage.ToString();
     }
 
     public void OnHover()
