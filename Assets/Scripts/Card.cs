@@ -7,7 +7,7 @@ using TMPro;
 public class Card : MonoBehaviour
 {
     [SerializeField] private float hoverDisplacement = 20f;
-	[SerializeField] private CardObject cardObject = null;  
+	public CardObject cardObject = null;  
     private bool cardEnabled = true;
 
     [Header("Visuals")]
@@ -19,6 +19,11 @@ public class Card : MonoBehaviour
     [SerializeField] private TMP_Text damageText = null;
 
     private void Awake()
+    {
+        InitializeCard();
+    }
+
+    public void InitializeCard()
     {
         cardSprite.texture = cardObject.sprite.texture;
         if (cardObject.hasEventPrimary)

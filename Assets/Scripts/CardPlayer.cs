@@ -64,6 +64,7 @@ public class CardPlayer : MonoBehaviour
     {
         Debug.Log("Played card");
         Destroy(card.gameObject);
+        BattleManager.instance.PlayCard(cardObject);
         CleanPlayer();
     }
 
