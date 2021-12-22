@@ -101,10 +101,18 @@ public class CardPlayer : MonoBehaviour
 
     public void PlayCard()
     {
-        Debug.Log("Played card");
-        Destroy(card.gameObject);
-        BattleManager.instance.PlayCard(cardObject);
-        CleanPlayer();
+        if(BattleManager.instance.playerMana >= cardObject.manaCost && BattleManager.instance.isPlayerTurn)
+        {
+            Debug.Log("Played card");
+            Destroy(card.gameObject);
+            BattleManager.instance.PlayCard(cardObject);
+            CleanPlayer();
+        }
+        else if(BattleManager.instance.playerMana < cardObject.manaCost)
+        {
+            Debug.Log("Not enough mana");
+            DismissCard();
+        }
     }
 
     private void CleanPlayer()

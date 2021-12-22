@@ -8,7 +8,7 @@ public class Card : MonoBehaviour
 {
     [SerializeField] private float hoverDisplacement = 20f;
 	public CardObject cardObject = null;  
-    private bool cardEnabled = true;
+    public bool cardEnabled = true;
 
     [Header("Visuals")]
     [SerializeField] private RawImage runeSprite = null;

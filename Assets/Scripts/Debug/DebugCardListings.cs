@@ -5,6 +5,7 @@ using UnityEngine;
 public class DebugCardListings : MonoBehaviour
 {
 	[SerializeField] private List<CardObject> cardObjects = new List<CardObject>();
+    [SerializeField] private List<EnemyObject> enemyObjects = new List<EnemyObject>();
 
     [Header("Deck")]
     [SerializeField] private Transform deckContentHolder = null;
@@ -15,6 +16,11 @@ public class DebugCardListings : MonoBehaviour
     [SerializeField] private Transform handContentHolder = null;
     [SerializeField] private GameObject handPickerPrefab = null;
     private GameObject newHandPicker = null;
+
+    [Header("Enemies")]
+    [SerializeField] private Transform enemyContentHolder = null;
+    [SerializeField] private GameObject enemyPickerPrefab = null;
+    private GameObject newEnemyPicker = null;
 
     private void Start()
     {
@@ -27,6 +33,13 @@ public class DebugCardListings : MonoBehaviour
             newHandPicker = Instantiate(handPickerPrefab, handContentHolder);
             newHandPicker.GetComponent<DebugHandCardButton>().card = cardObjects[i];
             newHandPicker.GetComponent<DebugHandCardButton>().InitializeToggle();
+        }
+
+        for (int i = 0; i < enemyObjects.Count; i++)
+        {
+            newEnemyPicker = Instantiate(enemyPickerPrefab, enemyContentHolder);
+            newEnemyPicker.GetComponent<DebugEnemyPicker>().enemy = enemyObjects[i];
+            newEnemyPicker.GetComponent<DebugEnemyPicker>().InitializeButton();
         }
     }
 }

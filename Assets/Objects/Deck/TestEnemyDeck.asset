@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ce8bfdde4fe00488a5e08c7f76eade, type: 3}
+  m_Name: TestEnemyDeck
+  m_EditorClassIdentifier: 
+  deckCards:
+  - {fileID: 11400000, guid: 2b598a4c3fce0234487fbdd21317c0d6, type: 2}
+  - {fileID: 11400000, guid: 50b7617d37f1caf4589b63469f5b3149, type: 2}
+  - {fileID: 11400000, guid: 9bb2856bdf2c6d44bb14e5b02914a107, type: 2}
+  - {fileID: 11400000, guid: ecdf3285bb2fe804fa9940d790ed9864, type: 2}
+  - {fileID: 11400000, guid: afb91142ec931a54cb291004a8402e5d, type: 2}
+  - {fileID: 11400000, guid: e3cb8d034c5a5e54eabc4c9096cb6ffe, type: 2}
+  - {fileID: 11400000, guid: 74bf3e47d515a7241ae3cbc44b42d7b5, type: 2}
+  - {fileID: 11400000, guid: 5d31eec5f06414f4d8bc9dcb3df21938, type: 2}

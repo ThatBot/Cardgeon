@@ -15,6 +15,8 @@ public class DebugController : MonoBehaviour
     [SerializeField] private Transform handCardPickerHolder = null;
     [SerializeField] private TMP_Text handSlotsLeft = null;
 
+    [SerializeField] private TMP_Text enemyDisplayText = null;
+
 	public static DebugController instance;
     private void Awake()
     {
@@ -23,6 +25,8 @@ public class DebugController : MonoBehaviour
         {
             debugOpenerButton.SetActive(true);
         }
+
+        BattleManager.instance.onEnemyInitialized += ChangeEnemyDisplayed;
     }
 
     private void Update()
@@ -63,6 +67,11 @@ public class DebugController : MonoBehaviour
     public void ChangeDeckCapacity(int capacity)
     {
         RunStats.instance.deckCapacity = capacity;
+    }
+
+    public void ChangeEnemyDisplayed()
+    {
+        enemyDisplayText.text = $"Current enemy: {BattleManager.instance.enemyObject.displayName}";
     }
 
 }
