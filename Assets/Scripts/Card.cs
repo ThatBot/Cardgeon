@@ -11,11 +11,15 @@ public class Card : MonoBehaviour
     private bool cardEnabled = true;
 
     [Header("Visuals")]
+    [SerializeField] private RawImage runeSprite = null;
     [SerializeField] private RawImage cardSprite = null;
     [SerializeField] private RawImage event1Sprite = null;
     [SerializeField] private RawImage event2Sprite = null;
+    [SerializeField] private RawImage event3Sprite = null;
     [SerializeField] private TMP_Text nameText = null;
+    [SerializeField] private TMP_Text runeNameText = null;
     [SerializeField] private TMP_Text manaText = null;
+    [SerializeField] private TMP_Text runeManaText = null;
     [SerializeField] private TMP_Text damageText = null;
 
     private void Awake()
@@ -25,22 +29,45 @@ public class Card : MonoBehaviour
 
     public void InitializeCard()
     {
-        cardSprite.texture = cardObject.sprite.texture;
-        if (cardObject.hasEventPrimary)
+        if (!cardObject.isRune)
         {
-            event1Sprite.texture = cardObject.cardEventSprite.texture;
-            event1Sprite.gameObject.SetActive(true);
-        }
+            cardSprite.texture = cardObject.sprite.texture;
+            runeSprite.gameObject.SetActive(false);
 
-        if (cardObject.hasEventSecondary)
+            if (cardObject.hasEventPrimary)
+            {
+                event1Sprite.texture = cardObject.cardEventSprite.texture;
+                event1Sprite.gameObject.SetActive(true);
+            }
+
+            if (cardObject.hasEventSecondary)
+            {
+                event2Sprite.texture = cardObject.secondaryCardEventSprite.texture;
+                event2Sprite.gameObject.SetActive(true);
+            }
+
+            if (cardObject.hasEventTertiary)
+            {
+                event3Sprite.texture = cardObject.tertiaryCardEventSprite.texture;
+                event3Sprite.gameObject.SetActive(true);
+            }
+
+            nameText.text = cardObject.displayName.ToString();
+            manaText.text = cardObject.manaCost.ToString();
+            damageText.text = cardObject.damage.ToString();
+            runeManaText.gameObject.SetActive(false);
+            runeNameText.gameObject.SetActive(false);
+        }
+        else
         {
-            event2Sprite.texture = cardObject.secondaryCardEventSprite.texture;
-            event2Sprite.gameObject.SetActive(true);
+            runeSprite.texture = cardObject.sprite.texture;
+            cardSprite.gameObject.SetActive(false);
+            runeNameText.text = cardObject.displayName.ToString();
+            runeManaText.text = cardObject.manaCost.ToString();
+            nameText.gameObject.SetActive(false);
+            manaText.gameObject.SetActive(false);
+            damageText.gameObject.SetActive(false);
         }
-
-        nameText.text = cardObject.displayName;
-        manaText.text = cardObject.manaCost.ToString();
-        damageText.text = (cardObject.isSpell) ? "--" : cardObject.damage.ToString();
     }
 
     public void OnHover()

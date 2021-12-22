@@ -11,15 +11,18 @@ public class CardObject : ScriptableObject
 	public Sprite sprite;
 	public Sprite cardEventSprite;
 	public Sprite secondaryCardEventSprite;
+	public Sprite tertiaryCardEventSprite;
 
 	[Header("Statistics")]
 	public int damage;
 	public int manaCost;
 	public CardEvents cardEvent;
 	public CardEvents secondaryCardEvent;
+	public CardEvents tertiaryCardEvent;
 	public bool hasEventPrimary;
 	public bool hasEventSecondary;
-	public bool isSpell;
+	public bool hasEventTertiary;
+	public bool isRune;
 
 	[Header("Dungeon")]
 	public int rarity;

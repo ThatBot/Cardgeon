@@ -18,11 +18,11 @@ public class GameManager : MonoBehaviour
 
     List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
 
-    public void LoadGame()
+    public void LoadScene(SceneIndexes currentScene, SceneIndexes sceneToGo)
     {
         loadingScreen.SetActive(true);
-        scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MENU));
-        scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.DUNGEON, LoadSceneMode.Additive));
+        scenesLoading.Add(SceneManager.UnloadSceneAsync((int)currentScene));
+        scenesLoading.Add(SceneManager.LoadSceneAsync((int)sceneToGo, LoadSceneMode.Additive));
 
         StartCoroutine(GetSceneLoadProgress());
     }

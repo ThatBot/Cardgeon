@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DebugHandCardButton : MonoBehaviour
 {
@@ -22,10 +23,14 @@ public class DebugHandCardButton : MonoBehaviour
 
     public void ToggleCard(bool toggle)
     {
-        if (toggle)
+        if (toggle && BattleManager.instance.maxFreeHandSlots > 0)
         {
             BattleManager.instance.AddCardToHand(card);
             return;
+        }
+        else if(toggle)
+        {
+            toggleObject.isOn = false;
         }
 
         BattleManager.instance.RemoveCardFromHand(card);

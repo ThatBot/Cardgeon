@@ -5,8 +5,10 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     [Header("Hand")]
-    public List<CardObject> hand = new List<CardObject>(8);
-    public List<Card> handObjects = new List<Card>(8);
+    public List<CardObject> hand = new List<CardObject>(4);
+    public List<Card> handObjects = new List<Card>(4);
+    public int maxCardsInHand = 4;
+    public int maxFreeHandSlots = 4;
     [SerializeField] private GameObject cardPrefab = null;
     [SerializeField] private Transform cardHolderTransform = null;
 
@@ -33,8 +35,9 @@ public class BattleManager : MonoBehaviour
 
     public void AddCardToHand(CardObject card)
     {
-        if(hand.Count < 8)
+        if(hand.Count < maxCardsInHand)
         {
+            maxFreeHandSlots--;
             hand.Add(card);
             AddCardObjects(card);
         }
@@ -53,7 +56,7 @@ public class BattleManager : MonoBehaviour
         if (hand.Contains(card))
         {
             hand.Remove(card);
-
+            maxFreeHandSlots++;
             for (int i = 0; i < handObjects.Count; i++)
             {
                 if(handObjects[i].cardObject == card)

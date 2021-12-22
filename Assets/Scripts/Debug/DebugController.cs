@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DebugController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class DebugController : MonoBehaviour
 
     [SerializeField] private Transform deckCardPickerHolder = null;
     [SerializeField] private Transform handCardPickerHolder = null;
+    [SerializeField] private TMP_Text handSlotsLeft = null;
 
 	public static DebugController instance;
     private void Awake()
@@ -28,6 +30,11 @@ public class DebugController : MonoBehaviour
         if (Input.GetKeyDown(debugKey))
         {
             OpenDebugInterface();
+        }
+
+        if (debugMenu.activeInHierarchy)
+        {
+            handSlotsLeft.text = $"Remaining free slots: {BattleManager.instance.maxFreeHandSlots.ToString()}";
         }
     }
 

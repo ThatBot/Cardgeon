@@ -6,11 +6,16 @@ using TMPro;
 public class CardPlayer : MonoBehaviour
 {
     [Header("Card Visuals")]
+    [SerializeField] private GameObject cardPlayerObject = null;
 	[SerializeField] private RawImage cardImage = null;
+	[SerializeField] private RawImage runeImage = null;
 	[SerializeField] private RawImage cardEventImage = null;
 	[SerializeField] private RawImage cardSecondaryEventImage = null;
+	[SerializeField] private RawImage cardTertiaryEventImage = null;
     [SerializeField] private TMP_Text nameText = null;
     [SerializeField] private TMP_Text manaText = null;
+    [SerializeField] private TMP_Text runeNameText = null;
+    [SerializeField] private TMP_Text runeManaText = null;
     [SerializeField] private TMP_Text damageText = null;
     private CardObject cardObject = null;
     private Card card = null;
@@ -30,28 +35,62 @@ public class CardPlayer : MonoBehaviour
         this.cardObject = cardObject;
         card = cardComponent;
         card.SwitchEnabled();
-        cardImage.gameObject.SetActive(true);
+        cardPlayerObject.SetActive(true);
     }
 
     private void SetCardVisuals(CardObject card)
     {
         cardEventImage.gameObject.SetActive(false);
         cardSecondaryEventImage.gameObject.SetActive(false);
+        cardTertiaryEventImage.gameObject.SetActive(false);
 
-        cardImage.texture = card.sprite.texture;
-        if (card.hasEventPrimary)
+        if (!card.isRune)
         {
-            cardEventImage.texture = card.cardEventSprite.texture;
-            cardEventImage.gameObject.SetActive(true);
+            manaText.gameObject.SetActive(true);
+            nameText.gameObject.SetActive(true);
+            damageText.gameObject.SetActive(true);
+            cardImage.gameObject.SetActive(true);
+
+            runeImage.gameObject.SetActive(false);
+            runeManaText.gameObject.SetActive(false);
+            runeNameText.gameObject.SetActive(false);
+
+            cardImage.texture = card.sprite.texture;
+            if (card.hasEventPrimary)
+            {
+                cardEventImage.texture = card.cardEventSprite.texture;
+                cardEventImage.gameObject.SetActive(true);
+            }
+            if (card.hasEventSecondary)
+            {
+                cardSecondaryEventImage.texture = card.secondaryCardEventSprite.texture;
+                cardSecondaryEventImage.gameObject.SetActive(true);
+            }
+            if (card.hasEventTertiary)
+            {
+                cardTertiaryEventImage.texture = card.tertiaryCardEventSprite.texture;
+                cardTertiaryEventImage.gameObject.SetActive(true);
+            }
+
+            nameText.text = card.displayName;
+            manaText.text = card.manaCost.ToString();
+            damageText.text = card.damage.ToString();
         }
-        if (card.hasEventSecondary)
+        else
         {
-            cardSecondaryEventImage.texture = card.secondaryCardEventSprite.texture;
-            cardSecondaryEventImage.gameObject.SetActive(true);
+            runeImage.gameObject.SetActive(true);
+            runeManaText.gameObject.SetActive(true);
+            runeNameText.gameObject.SetActive(true);
+
+            runeNameText.text = card.displayName;
+            runeImage.texture = card.sprite.texture;
+            runeManaText.text = card.manaCost.ToString();
+
+            manaText.gameObject.SetActive(false);
+            nameText.gameObject.SetActive(false);
+            damageText.gameObject.SetActive(false);
+            cardImage.gameObject.SetActive(false);
         }
-        nameText.text = card.displayName;
-        manaText.text = card.manaCost.ToString();
-        damageText.text = card.damage.ToString();
     }
 
     public void DismissCard()
@@ -70,7 +109,7 @@ public class CardPlayer : MonoBehaviour
 
     private void CleanPlayer()
     {
-        cardImage.gameObject.SetActive(false);
+        cardPlayerObject.SetActive(false);
         card = null;
         cardObject = null;
     }
