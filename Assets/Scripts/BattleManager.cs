@@ -88,6 +88,11 @@ public class BattleManager : MonoBehaviour
         {
             enemyMana -= card.manaCost;
 
+            if (!card.isRune)
+            {
+                HurtPlayer(card.damage);
+            }
+
             if (card.hasEventPrimary)
             {
                 ProcessEvent(card.cardEvent, true);
@@ -166,6 +171,11 @@ public class BattleManager : MonoBehaviour
         RemoveCardFromHand(card);
 
         playerMana -= card.manaCost;
+
+        if (!card.isRune)
+        {
+            HurtEnemy(card.damage);
+        }
 
         if (card.hasEventPrimary)
         {
