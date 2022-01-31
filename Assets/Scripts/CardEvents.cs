@@ -1,15 +1,13 @@
 using System;
-using UnityEngine;
+using System.Collections.Generic;
 
-public enum CardEvents
+public class CardEvents
 {
-	None,
-	Lightning,
-	StrongLightning,
-	Combustion,
-	Acid,
-	Poison,
-	Corrosion,
-	Radioactive
+	public static List<CardEventObject> cardEvents = new List<CardEventObject>();
+
+	public static void InitializeEvents()
+    {
+
+    }
 }
 

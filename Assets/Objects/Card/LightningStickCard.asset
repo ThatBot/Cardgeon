@@ -15,16 +15,10 @@ MonoBehaviour:
   displayName: Lightning Stick
   description: 
   sprite: {fileID: 21300000, guid: 929e97b97dbdf4a46b6ee2ad0802c936, type: 3}
-  cardEventSprite: {fileID: 21300000, guid: d93914a0d54b6f8448266827c1fda8c1, type: 3}
-  secondaryCardEventSprite: {fileID: 0}
-  tertiaryCardEventSprite: {fileID: 0}
   damage: 1
   manaCost: 2
-  cardEvent: 1
-  secondaryCardEvent: 0
-  tertiaryCardEvent: 0
-  hasEventPrimary: 1
-  hasEventSecondary: 0
-  hasEventTertiary: 0
+  cardEvent: {fileID: 11400000, guid: 71ffe52b8b00700419510908566ca55e, type: 2}
+  sCardEvent: {fileID: 0}
+  tCardEvent: {fileID: 0}
   isRune: 0
   rarity: 0

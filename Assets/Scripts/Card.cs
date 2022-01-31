@@ -22,11 +22,6 @@ public class Card : MonoBehaviour
     [SerializeField] private TMP_Text runeManaText = null;
     [SerializeField] private TMP_Text damageText = null;
 
-    private void Awake()
-    {
-        InitializeCard();
-    }
-
     public void InitializeCard()
     {
         if (!cardObject.isRune)
@@ -34,21 +29,21 @@ public class Card : MonoBehaviour
             cardSprite.texture = cardObject.sprite.texture;
             runeSprite.gameObject.SetActive(false);
 
-            if (cardObject.hasEventPrimary)
+            if (cardObject.cardEvent)
             {
-                event1Sprite.texture = cardObject.cardEventSprite.texture;
+                event1Sprite.texture = cardObject.cardEvent.sprite.texture;
                 event1Sprite.gameObject.SetActive(true);
             }
 
-            if (cardObject.hasEventSecondary)
+            if (cardObject.sCardEvent)
             {
-                event2Sprite.texture = cardObject.secondaryCardEventSprite.texture;
+                event2Sprite.texture = cardObject.sCardEvent.sprite.texture;
                 event2Sprite.gameObject.SetActive(true);
             }
 
-            if (cardObject.hasEventTertiary)
+            if (cardObject.tCardEvent)
             {
-                event3Sprite.texture = cardObject.tertiaryCardEventSprite.texture;
+                event3Sprite.texture = cardObject.tCardEvent.sprite.texture;
                 event3Sprite.gameObject.SetActive(true);
             }
 

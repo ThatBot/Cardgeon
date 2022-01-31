@@ -1,6 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using DG.Tweening;
 
 public delegate void InitializedEnemy();
 
@@ -19,6 +21,7 @@ public class BattleManager : MonoBehaviour
     public GameObject enemyGameObject = null;
     public Transform enemyHolder = null;
     public event InitializedEnemy onEnemyInitialized;
+    private EventProcessor eventProcessor = new EventProcessor();
 
     [Header("Enemy")]
     public int enemyHealth;
@@ -31,6 +34,18 @@ public class BattleManager : MonoBehaviour
     public int playerMana = 10;
     public int basePlayerMana = 10;
     public bool isPlayerTurn = true;
+
+    [Header("Enemy Play Animation")]  
+    [SerializeField] private float animDuration = 1f;
+    [SerializeField] private float fadeDuration = 1f;
+    [SerializeField] private Animator playedCardAnimator = null;
+    [SerializeField] private GameObject normalCardGameObject = null;
+    [SerializeField] private GameObject runeCardGameObject = null;
+    AnimatorStateInfo defaultState;
+
+    [Header("Battle UI")]
+    [SerializeField] private Slider manaSlider = null;
+    [SerializeField] private GameObject endTurnButtonObject = null;
 
     public static BattleManager instance;
     private void Awake()
@@ -66,6 +81,7 @@ public class BattleManager : MonoBehaviour
 
     public void StartTurn()
     {
+        endTurnButtonObject.SetActive(true);
         playerMana = basePlayerMana;
         isPlayerTurn = true;
         TakeCard();
@@ -73,6 +89,7 @@ public class BattleManager : MonoBehaviour
 
     public void EndTurn()
     {
+        endTurnButtonObject.SetActive(false);
         enemyMana = enemyObject.mana;
         isPlayerTurn = false;
         EnemyPlayCard();
@@ -86,28 +103,69 @@ public class BattleManager : MonoBehaviour
 
         if(enemyMana >= card.manaCost)
         {
-            enemyMana -= card.manaCost;
-
             if (!card.isRune)
             {
-                HurtPlayer(card.damage);
+                //Initialize the card visuals
+                normalCardGameObject.GetComponent<RawImage>().texture = card.sprite.texture;
+                normalCardGameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = card.displayName;
+                normalCardGameObject.transform.GetChild(1).GetComponent<TMP_Text>().text = card.manaCost.ToString();
+                normalCardGameObject.transform.GetChild(2).GetComponent<TMP_Text>().text = card.damage.ToString();
+                if (card.cardEvent != null)
+                {
+                    normalCardGameObject.transform.GetChild(3).GetComponent<RawImage>().texture = card.cardEvent.sprite.texture;
+                    if (card.sCardEvent != null)
+                    {
+                        normalCardGameObject.transform.GetChild(4).GetComponent<RawImage>().texture = card.sCardEvent.sprite.texture;
+                        if (card.tCardEvent != null)
+                        {
+                            normalCardGameObject.transform.GetChild(5).GetComponent<RawImage>().texture = card.tCardEvent.sprite.texture;
+                        }
+                    }
+                }
+                normalCardGameObject.SetActive(true);
+
+            }
+            else
+            {
+                //Initialize the rune visuals
+                runeCardGameObject.GetComponent<RawImage>().texture = card.sprite.texture;
+                runeCardGameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = card.displayName;
+                runeCardGameObject.transform.GetChild(1).GetComponent<TMP_Text>().text = card.manaCost.ToString();
+                runeCardGameObject.SetActive(true);
             }
 
-            if (card.hasEventPrimary)
+            playedCardAnimator.Play("Card Played");
+
+            if(playedCardAnimator.GetCurrentAnimatorStateInfo(0).IsName("Default State"))
             {
-                ProcessEvent(card.cardEvent, true);
-                if (card.hasEventSecondary)
+                OnEnemyPlayAnimComplete(card);
+            }
+        }
+    }
+
+    public void OnEnemyPlayAnimComplete(CardObject card)
+    {
+        enemyMana -= card.manaCost;
+
+        if (!card.isRune)
+        {
+            HurtPlayer(card.damage);
+        }
+
+        if (card.cardEvent != null)
+        {
+            ProcessEvent(card.cardEvent, true);
+            if (card.sCardEvent != null)
+            {
+                ProcessEvent(card.sCardEvent, true);
+                if (card.tCardEvent != null)
                 {
-                    ProcessEvent(card.secondaryCardEvent, true);
-                    if (card.hasEventTertiary)
-                    {
-                        ProcessEvent(card.tertiaryCardEvent, true);
-                    }
+                    ProcessEvent(card.tCardEvent, true);
                 }
             }
         }
 
-        if(enemyMana >= enemyObject.mana / 2)
+        if (enemyMana >= enemyObject.mana / 2)
         {
             EnemyPlayCard();
             return;
@@ -172,20 +230,22 @@ public class BattleManager : MonoBehaviour
 
         playerMana -= card.manaCost;
 
+        manaSlider.value = playerMana;
+
         if (!card.isRune)
         {
             HurtEnemy(card.damage);
         }
 
-        if (card.hasEventPrimary)
+        if (card.cardEvent != null)
         {
             ProcessEvent(card.cardEvent, false);
-            if (card.hasEventSecondary)
+            if (card.sCardEvent != null)
             {
-                ProcessEvent(card.secondaryCardEvent, false);
-                if (card.hasEventTertiary)
+                ProcessEvent(card.sCardEvent, false);
+                if (card.tCardEvent != null)
                 {
-                    ProcessEvent(card.tertiaryCardEvent, false);
+                    ProcessEvent(card.tCardEvent, false);
                 }
             }
         }
@@ -241,8 +301,8 @@ public class BattleManager : MonoBehaviour
         Debug.Log("You are dead");
     }
 
-    public void ProcessEvent(CardEvents _cardEvent, bool _isEnemy)
+    public void ProcessEvent(CardEventObject _cardEvent, bool _isEnemy)
     {
-
+        eventProcessor.ProcessEvent(_cardEvent, _isEnemy);
     }
 }

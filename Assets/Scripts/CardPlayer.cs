@@ -56,19 +56,19 @@ public class CardPlayer : MonoBehaviour
             runeNameText.gameObject.SetActive(false);
 
             cardImage.texture = card.sprite.texture;
-            if (card.hasEventPrimary)
+            if (card.cardEvent)
             {
-                cardEventImage.texture = card.cardEventSprite.texture;
+                cardEventImage.texture = card.cardEvent.sprite.texture;
                 cardEventImage.gameObject.SetActive(true);
             }
-            if (card.hasEventSecondary)
+            if (card.sCardEvent)
             {
-                cardSecondaryEventImage.texture = card.secondaryCardEventSprite.texture;
+                cardSecondaryEventImage.texture = card.sCardEvent.sprite.texture;
                 cardSecondaryEventImage.gameObject.SetActive(true);
             }
-            if (card.hasEventTertiary)
+            if (card.tCardEvent)
             {
-                cardTertiaryEventImage.texture = card.tertiaryCardEventSprite.texture;
+                cardTertiaryEventImage.texture = card.tCardEvent.sprite.texture;
                 cardTertiaryEventImage.gameObject.SetActive(true);
             }
 
